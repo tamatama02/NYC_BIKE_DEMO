@@ -1,0 +1,589 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Tutorial 1 - Notebook Basics\n\nWelcome to Oracle Big Data Cloud Service - Compute Edition (BDCS-CE).\n\n\n**Contents**\n\n+ About Zeppelin and Interpreters\n+ About the Markdown Interpreter\n+ About the Shell Interpreter\n+ A few Zepellin tricks (printing, restarting, viewing logs)\n+ Next Steps\n\nAs a reminder, the documentation for BDCS-CE can be found here: \u003chttp://docs.oracle.com/cloud/latest/big-data-compute-cloud/index.html\u003e\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:33:09 PM",
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": "true"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eTutorial 1 - Notebook Basics\u003c/h1\u003e\n\u003cp\u003eWelcome to Oracle Big Data Cloud Service - Compute Edition (BDCS-CE).\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eContents\u003c/strong\u003e\u003c/p\u003e\n\u003cul\u003e\n  \u003cli\u003eAbout Zeppelin and Interpreters\u003c/li\u003e\n  \u003cli\u003eAbout the Markdown Interpreter\u003c/li\u003e\n  \u003cli\u003eAbout the Shell Interpreter\u003c/li\u003e\n  \u003cli\u003eA few Zepellin tricks (printing, restarting, viewing logs)\u003c/li\u003e\n  \u003cli\u003eNext Steps\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eAs a reminder, the documentation for BDCS-CE can be found here: \u003ca href\u003d\"http://docs.oracle.com/cloud/latest/big-data-compute-cloud/index.html\"\u003ehttp://docs.oracle.com/cloud/latest/big-data-compute-cloud/index.html\u003c/a\u003e\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288224_258637398",
+      "id": "20170310-124403_2105432248",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:33:09 PM",
+      "dateFinished": "Aug 23, 2017 4:33:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# About Zeppelin and Interpreters\n\nBDCS-CE includes a built-in Zeppelin notebook.  Currently, BDCS-CE is using Zeppelin version 0.7.0.  You can more about Zeppelin here \u003chttps://zeppelin.apache.org/docs/0.7.0/\u003e\n\n**To get started**, please review the quick overview about Notes and how to interact with them here: \u003chttps://zeppelin.apache.org/docs/0.7.0/quickstart/explorezeppelinui.html#note-layout\u003e\n\n\n### About Interpreters\nThe Zeppelin notebook is powered by Interpreters, which allow various technologies to be combined into a single, easily documented environment.  The Interpreters currently offered with this version of BDCS-CE are\n\n+ Markdown (%md)\n+ Shell (%sh)\n+ Spark with Scala (%spark)\n+ Spark with Python (%pyspark)\n+ Spark SQL (%sql)\n+ Hive (%hive)\n+ JDBC (%jdbc)\n\nIn this first tutorial, we will introduce you to the Markdown and Shell Interpreters.\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:33:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eAbout Zeppelin and Interpreters\u003c/h1\u003e\n\u003cp\u003eBDCS-CE includes a built-in Zeppelin notebook. Currently, BDCS-CE is using Zeppelin version 0.7.0. You can more about Zeppelin here \u003ca href\u003d\"https://zeppelin.apache.org/docs/0.7.0/\"\u003ehttps://zeppelin.apache.org/docs/0.7.0/\u003c/a\u003e\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eTo get started\u003c/strong\u003e, please review the quick overview about Notes and how to interact with them here: \u003ca href\u003d\"https://zeppelin.apache.org/docs/0.7.0/quickstart/explorezeppelinui.html#note-layout\"\u003ehttps://zeppelin.apache.org/docs/0.7.0/quickstart/explorezeppelinui.html#note-layout\u003c/a\u003e\u003c/p\u003e\n\u003ch3\u003eAbout Interpreters\u003c/h3\u003e\n\u003cp\u003eThe Zeppelin notebook is powered by Interpreters, which allow various technologies to be combined into a single, easily documented environment. The Interpreters currently offered with this version of BDCS-CE are\u003c/p\u003e\n\u003cul\u003e\n  \u003cli\u003eMarkdown (%md)\u003c/li\u003e\n  \u003cli\u003eShell (%sh)\u003c/li\u003e\n  \u003cli\u003eSpark with Scala (%spark)\u003c/li\u003e\n  \u003cli\u003eSpark with Python (%pyspark)\u003c/li\u003e\n  \u003cli\u003eSpark SQL (%sql)\u003c/li\u003e\n  \u003cli\u003eHive (%hive)\u003c/li\u003e\n  \u003cli\u003eJDBC (%jdbc)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eIn this first tutorial, we will introduce you to the Markdown and Shell Interpreters.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288228_257098403",
+      "id": "20170314-111138_1763825608",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:33:22 PM",
+      "dateFinished": "Aug 23, 2017 4:33:22 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# About the Markdown Interpreter (%md)\nThe Markdown interpreter is used to add documentation to your notebooks.  To create a paragraph using the Markdown interpreter, use %md for the first line in the code editor.\n\nDetails about the markdown interpreter can be found here: \u003chttps://zeppelin.apache.org/docs/0.7.0/interpreter/markdown.html\u003e\n\n#### Some simple examples...\n\n**Add Emphasis** using one or more \\*\n\nCreate a list using \\+\n\n+ item\n+ item\n+ item\n\n\n\nFor more, check out the Markdown cheatsheet at \u003chttps://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\u003e\n\n_Hint: View the editor for this section to see the actual Markdown code used_\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:33:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eAbout the Markdown Interpreter (%md)\u003c/h1\u003e\n\u003cp\u003eThe Markdown interpreter is used to add documentation to your notebooks. To create a paragraph using the Markdown interpreter, use %md for the first line in the code editor.\u003c/p\u003e\n\u003cp\u003eDetails about the markdown interpreter can be found here: \u003ca href\u003d\"https://zeppelin.apache.org/docs/0.7.0/interpreter/markdown.html\"\u003ehttps://zeppelin.apache.org/docs/0.7.0/interpreter/markdown.html\u003c/a\u003e\u003c/p\u003e\n\u003ch4\u003eSome simple examples\u0026hellip;\u003c/h4\u003e\n\u003cp\u003e\u003cstrong\u003eAdd Emphasis\u003c/strong\u003e using one or more *\u003c/p\u003e\n\u003cp\u003eCreate a list using +\u003c/p\u003e\n\u003cul\u003e\n  \u003cli\u003eitem\u003c/li\u003e\n  \u003cli\u003eitem\u003c/li\u003e\n  \u003cli\u003eitem\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eFor more, check out the Markdown cheatsheet at \u003ca href\u003d\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\"\u003ehttps://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\u003c/a\u003e\u003c/p\u003e\n\u003cp\u003e\u003cem\u003eHint: View the editor for this section to see the actual Markdown code used\u003c/em\u003e\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288228_257098403",
+      "id": "20170314-103234_1882629392",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:33:46 PM",
+      "dateFinished": "Aug 23, 2017 4:33:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Before you continue...\n\nBefore you continue, be sure you know how to work with Notes.  Here is quick tutorial on working with the Note layout: \u003chttps://zeppelin.apache.org/docs/0.7.0/quickstart/explorezeppelinui.html#note-layout\u003e\n\nYou will want to make sure you know how to:\n\n+ Show the code editor for a paragraph\n+ Run a paragraph\n\nNow is a good time to **practice**.  Go ahead and show the code editor for this paragraph and your name to the line below.  Then run this paragraph to see the change.\n\n**Hello your_name_here**\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:33:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eBefore you continue\u0026hellip;\u003c/h1\u003e\n\u003cp\u003eBefore you continue, be sure you know how to work with Notes. Here is quick tutorial on working with the Note layout: \u003ca href\u003d\"https://zeppelin.apache.org/docs/0.7.0/quickstart/explorezeppelinui.html#note-layout\"\u003ehttps://zeppelin.apache.org/docs/0.7.0/quickstart/explorezeppelinui.html#note-layout\u003c/a\u003e\u003c/p\u003e\n\u003cp\u003eYou will want to make sure you know how to:\u003c/p\u003e\n\u003cul\u003e\n  \u003cli\u003eShow the code editor for a paragraph\u003c/li\u003e\n  \u003cli\u003eRun a paragraph\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eNow is a good time to \u003cstrong\u003epractice\u003c/strong\u003e. Go ahead and show the code editor for this paragraph and your name to the line below. Then run this paragraph to see the change.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eHello your_name_here\u003c/strong\u003e\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288229_256713654",
+      "id": "20170330-165953_1590459004",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:33:54 PM",
+      "dateFinished": "Aug 23, 2017 4:33:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# About the Shell Interpreter (%sh)\n\nThe shell interpreter runs linux shell commands as the zeppelin user on the BDCS-CE server running zepellin.  It can be handy way to check zeppelin log files, pull files into BDCS-CE, interact with HDFS, or change/install software.  SSH can also be used, but running shell commands via the notebook can be more natural and self-documenting.\n\nBy default, the zeppelin user does not have sudo privileges.  But in the next Tutorial, we will show how you can add zeppelin to the authorized sudo users list.\n\nThe following paragraph has some sample shell command examples.",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:34:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eAbout the Shell Interpreter (%sh)\u003c/h1\u003e\n\u003cp\u003eThe shell interpreter runs linux shell commands as the zeppelin user on the BDCS-CE server running zepellin. It can be handy way to check zeppelin log files, pull files into BDCS-CE, interact with HDFS, or change/install software. SSH can also be used, but running shell commands via the notebook can be more natural and self-documenting.\u003c/p\u003e\n\u003cp\u003eBy default, the zeppelin user does not have sudo privileges. But in the next Tutorial, we will show how you can add zeppelin to the authorized sudo users list.\u003c/p\u003e\n\u003cp\u003eThe following paragraph has some sample shell command examples.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288229_256713654",
+      "id": "20170314-104354_917688288",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:34:05 PM",
+      "dateFinished": "Aug 23, 2017 4:34:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Example: Shell Interpreter commands",
+      "text": "%sh\necho \"running whoami\"\nwhoami\necho \"..\"\necho \"running pwd\"\npwd\necho \"..\"\necho \"running a hadoop command\"\nhadoop fs -ls /user\necho \"..\"\necho \"done\"",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:34:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": "false"
+        },
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288229_256713654",
+      "id": "20170314-104726_1481029671",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:34:18 PM",
+      "dateFinished": "Aug 23, 2017 4:34:21 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Before you continue...\n\nDid you notice that the above Shell example paragraph had no output?  (At least it didn\u0027t when you first imported it).  Go ahead and run the above paragraph to execute the sample shell commands and see the output.",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:35:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eBefore you continue\u0026hellip;\u003c/h1\u003e\n\u003cp\u003eDid you notice that the above Shell example paragraph had no output? (At least it didn\u0026rsquo;t when you first imported it). Go ahead and run the above paragraph to execute the sample shell commands and see the output.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288230_257867901",
+      "id": "20170330-170431_946339972",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:35:03 PM",
+      "dateFinished": "Aug 23, 2017 4:35:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Next Steps\n\n+ Review the above links to learn more about Zeppelin and Markdown\n+ Refer to the below tips for some additional tricks on working with Zeppelin in BDCS-CE\n+ Do the BDCS-CE Working with Notebook tutorial from the documentation if you have not yet done it: \u003chttp://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/bdcsce/notebook/notebook.html\u003e\n+ Move on to the next tutorial",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:35:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eNext Steps\u003c/h1\u003e\n\u003cul\u003e\n  \u003cli\u003eReview the above links to learn more about Zeppelin and Markdown\u003c/li\u003e\n  \u003cli\u003eRefer to the below tips for some additional tricks on working with Zeppelin in BDCS-CE\u003c/li\u003e\n  \u003cli\u003eDo the BDCS-CE Working with Notebook tutorial from the documentation if you have not yet done it: \u003ca href\u003d\"http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/bdcsce/notebook/notebook.html\"\u003ehttp://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/bdcsce/notebook/notebook.html\u003c/a\u003e\u003c/li\u003e\n  \u003cli\u003eMove on to the next tutorial\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288230_257867901",
+      "id": "20170314-103401_1689681646",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:35:11 PM",
+      "dateFinished": "Aug 23, 2017 4:35:11 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Tip: How to Print Notebooks (Save as PDF)\n\nHere is a trick to pretty print the Notebooks so that you can easily share them via email.  Note: you can also export notebooks, but the recipient would need to import the notebook into another Zepellin instance to view it.\n\nThe trick is that the main body of the notebook is enclosed in an iframe.  To best print the notebook, you want to just print the main iframe.  For instance, using the Firefox browser, right-click on the open area between the Notebook title and the set of action icons.  In the pop-up menu, then choose This Frame... Print Frame...   Then choose a printer driver that can print to PDF.\n\nFor illustration, here is a picture:\n![printing](https://gse00010212.storage.oraclecloud.com/v1/Storage-gse00010212/images/snap0011398.jpg \"Printing the Note Frame\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:35:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eTip: How to Print Notebooks (Save as PDF)\u003c/h1\u003e\n\u003cp\u003eHere is a trick to pretty print the Notebooks so that you can easily share them via email. Note: you can also export notebooks, but the recipient would need to import the notebook into another Zepellin instance to view it.\u003c/p\u003e\n\u003cp\u003eThe trick is that the main body of the notebook is enclosed in an iframe. To best print the notebook, you want to just print the main iframe. For instance, using the Firefox browser, right-click on the open area between the Notebook title and the set of action icons. In the pop-up menu, then choose This Frame\u0026hellip; Print Frame\u0026hellip; Then choose a printer driver that can print to PDF.\u003c/p\u003e\n\u003cp\u003eFor illustration, here is a picture:\u003cbr/\u003e\u003cimg src\u003d\"https://gse00010212.storage.oraclecloud.com/v1/Storage-gse00010212/images/snap0011398.jpg\" alt\u003d\"printing\" title\u003d\"Printing the Note Frame\" /\u003e\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288230_257867901",
+      "id": "20170314-105515_126797428",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:35:16 PM",
+      "dateFinished": "Aug 23, 2017 4:35:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Tip: How (and when) to Restart Zeppelin Notebooks\n\nFrom time to time, you may want to restart the Zepellin Notebook process.  To do so, \n\n+ Click on the Settings tab at the top of the browser\n+ Then, click on Notebook on the left-hand column\n+ Then click Restart\n\nReasons why you may want to restart the Zeppelin process.\n\n+ You changed a configuration and want to pick up the new value.  For instance, once you set certain swiftfs parameters (as would be needed to reference the Oracle Storage Cloud Object Store), these values will be used for the rest of the session.  You restart Zeppelin to pick up the new value.\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:35:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eTip: How (and when) to Restart Zeppelin Notebooks\u003c/h1\u003e\n\u003cp\u003eFrom time to time, you may want to restart the Zepellin Notebook process. To do so, \u003c/p\u003e\n\u003cul\u003e\n  \u003cli\u003eClick on the Settings tab at the top of the browser\u003c/li\u003e\n  \u003cli\u003eThen, click on Notebook on the left-hand column\u003c/li\u003e\n  \u003cli\u003eThen click Restart\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eReasons why you may want to restart the Zeppelin process.\u003c/p\u003e\n\u003cul\u003e\n  \u003cli\u003eYou changed a configuration and want to pick up the new value. For instance, once you set certain swiftfs parameters (as would be needed to reference the Oracle Storage Cloud Object Store), these values will be used for the rest of the session. You restart Zeppelin to pick up the new value.\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288231_257483152",
+      "id": "20170314-110314_455035664",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:35:23 PM",
+      "dateFinished": "Aug 23, 2017 4:35:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Tip: How to look at the Zeppelin log\n\nThe zeppelin log is at /u01/bdcsce/data/var/log/zeppelin\n\nThe following paragraph has some examples showing how to review the logs.",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 4:35:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eTip: How to look at the Zeppelin log\u003c/h1\u003e\n\u003cp\u003eThe zeppelin log is at /u01/bdcsce/data/var/log/zeppelin\u003c/p\u003e\n\u003cp\u003eThe following paragraph has some examples showing how to review the logs.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288231_257483152",
+      "id": "20170314-103202_1623627021",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 4:35:32 PM",
+      "dateFinished": "Aug 23, 2017 4:35:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Example: Viewing the Zeppelin Log File",
+      "text": "%sh\ncd /u01/bdcsce/data/var/log/zeppelin\nls -ltr\necho \"..\"\necho \"..\"\ntail -30 zeppelin-zeppelin-*.log",
+      "user": "anonymous",
+      "dateUpdated": "Aug 23, 2017 5:00:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "title": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": "false"
+        },
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {},
+      "apps": [],
+      "jobName": "paragraph_1495426288232_255559407",
+      "id": "20170314-103516_2010480345",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "dateStarted": "Aug 23, 2017 5:00:18 PM",
+      "dateFinished": "Aug 23, 2017 5:00:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "May 22, 2017 12:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426288232_255559407",
+      "id": "20170314-111355_401235007",
+      "dateCreated": "May 22, 2017 12:11:28 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": " Tutorial 1 Notebook Basics",
+  "id": "2CGT3D6QX",
+  "angularObjects": {
+    "2CRE1K4KE:shared_process": [],
+    "2CN6NRUSN:shared_process": [],
+    "2CQTZXEKZ:shared_process": [],
+    "2CQCG2Z35:shared_process": [],
+    "2CNDTB34J:shared_process": [],
+    "2C4U48MY3_spark2:shared_process": [],
+    "2CNF71SN6:shared_process": [],
+    "2CNUQVDBV:shared_process": []
+  },
+  "config": {
+    "looknfeel": "default"
+  },
+  "info": {}
+}

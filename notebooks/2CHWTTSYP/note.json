@@ -1,0 +1,817 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Tutorial 2 Working with the Object Store and HDFS\n\nWelcome to Oracle Big Data Cloud Service - Compute Edition (BDCS-CE).\n\n**Contents**\n\n+ About Oracle Storage Cloud Object Store\n+ Importance of Object Store\n+ Download sample data\n+ Upload files to the Object Store\n+ List Files in a specific Container\n+ Download files from the Object Store\n+ Upload/download from the local file system to HDFS\n+ Use Hadoop Tools (hadoop fs or distcp) with Object Store\n+ Use the BDCS-CE Console Data Stores Viewer\n+ Next Steps\n\nAs a reminder, the documentation for BDCS-CE can be found here: \u003chttp://docs.oracle.com/cloud/latest/big-data-compute-cloud/index.html\u003e\n\n**NOTE: You need to have successfully followed the instructions in Tutorial 2 before starting this tutorial.**\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:33 AM",
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": "true"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363657_1963767903",
+      "id": "20170310-124446_1861963408",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:37:30 AM",
+      "dateFinished": "Nov 7, 2017 2:37:30 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# About Oracle Storage Cloud Object Store\n\nOracle Storage Cloud Object Store provides storage that is secure, resilient, elastic, and simple to use so your data is available when you need it from any environment connected to the Internet.  An overview can be found here: \u003chttps://cloud.oracle.com/en_US/storage/object-storage/features\u003e and documentation can be found here: \u003chttp://docs.oracle.com/en/cloud/iaas/storage-cloud/index.html\u003e\n\nFor purposes of this tutorial, it is important to know that the Oracle Object Store supports the industry standard OpenStack Object Storage API.  This OpenStack Object Storage API is known as \"swift\". BDCS-CE includes swift drivers that work with Spark and Hadoop so that you can use those tools with Object Store data.  This tutorial will provide examples of using the swift drivers with the Oracle Object Store.\n\nThe tutorial will also provide examples of using the opensource swift command-line utility. Details here: \u003chttps://docs.openstack.org/developer/python-swiftclient/cli.html\u003e\n\nIn addition to the examples we provide in this tutorial, there are other ways to interact with the Object Store.  There is a web browser GUI for the Object Store which you can access from your Oracle Cloud My Services page.\n![Storage Gui](https://gse00010212.storage.oraclecloud.com/v1/Storage-gse00010212/images/snap0011444.jpg \"storagegui\")\n\nThere are desktop tools like the Windows Cloudberry Explorer OpenStack Swift client: \u003chttps://www.cloudberrylab.com/explorer/openstack.aspx\u003e\n\nAnd there are also various utilities like UploadCLI (very useful for large files) and other APIs (REST, Java, etc), which are documented here: \u003chttp://docs.oracle.com/en/cloud/iaas/storage-cloud/index.html\u003e\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:33 AM",
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": "true"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363657_1963767903",
+      "id": "20170310-124506_633450220",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:37:18 AM",
+      "dateFinished": "Nov 7, 2017 2:37:18 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Importance of Object Store\n\n![New Data Lake](https://gse00010212.storage.oraclecloud.com/v1/Storage-gse00010212/images/snap0011443.jpg \"New Data Lake\")\nFor Big Data, Object Store enables you to\n\n+ Detach compute from storage allow for the two environments to grow independently \n+ Persist all the data in a low cost, globally distributed store that speeds processes up while making it more durable\n+ Maintain a core, distribution based environment while being able to use the latest and greatest Hadoop projects on demand\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363658_1964922150",
+      "id": "20170403-112031_1056462344",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Aug 23, 2017 4:36:33 PM",
+      "dateFinished": "Aug 23, 2017 4:36:33 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Download some sample data for experimentation\n\nNext, we will download some sample data to experiment with.  In this example, we are going to download the text of a handful of United States Presidential Inauguration Speeches.  We will install the lynx browser to help us. Then we will download the speeches from the **Yale Law School Avalon Project** website: \u003chttp://avalon.law.yale.edu/subject_menus/inaug.asp\u003e ",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": false,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363659_1964537401",
+      "id": "20170403-103530_1455796101",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:38:47 AM",
+      "dateFinished": "Nov 7, 2017 2:38:47 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Commands to download sample data (presidential speeches)",
+      "text": "%sh\n\n#let\u0027s make the zeppelin directory readable.  This is so that Spark jobs can read these files later...\nchmod ga+rx .\n\nmkdir speeches\ncd speeches\n\n#download some text from internet using the lynx browser\n#we will grab inauguration speeches from here http://avalon.law.yale.edu/subject_menus/inaug.asp\n\nwget -q -O - http://avalon.law.yale.edu/18th_century/wash1.asp | sed \"s/\u003c[^\u003e]\\+\u003e//g\" | tail -n +75 | head -n -37 \u003e pres1789_wash1.txt\nwget -q -O - http://avalon.law.yale.edu/19th_century/lincoln1.asp | sed \"s/\u003c[^\u003e]\\+\u003e//g\" | tail -n +75 | head -n -37 \u003e pres1861_lincoln1.txt\nwget -q -O - http://avalon.law.yale.edu/20th_century/froos1.asp | sed \"s/\u003c[^\u003e]\\+\u003e//g\" | tail -n +76 | head -n -39 \u003e pres1933_fdr1.txt\nwget -q -O - http://avalon.law.yale.edu/20th_century/kennedy.asp | sed \"s/\u003c[^\u003e]\\+\u003e//g\" | tail -n +76 | head -n -39 \u003e pres1961_jfk.txt\nwget -q -O - http://avalon.law.yale.edu/20th_century/reagan1.asp | sed \"s/\u003c[^\u003e]\\+\u003e//g\" | tail -n +76 | head -n -41 \u003e pres1981_reagan1.txt\n\necho \"files downloaded\"\nls -l\n\necho \"..\"\n\necho \"done\"",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:39:09 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/text",
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false,
+          "language": "text"
+        },
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {
+          "http_proxy": "",
+          "https_proxy": "",
+          "no_proxy": ""
+        },
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363659_1964537401",
+      "id": "20170314-123722_1592949003",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:37:49 AM",
+      "dateFinished": "Nov 7, 2017 1:47:27 AM",
+      "status": "ABORT",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Before you continue...\n\nBefore you continue, be sure to have run the paragraph above and check the output.  At the bottom of the output, you should see 5 presidential speeches stored as .txt files.\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 1:31:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363659_1964537401",
+      "id": "20170403-104137_306661141",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Aug 23, 2017 4:36:48 PM",
+      "dateFinished": "Aug 23, 2017 4:36:48 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# How to upload a file from the BDCS-CE linux file system to the Object Store\n\nWe have now downloaded the text of several Presidential speeches to the local linux file system on the Zeppelin server.  Let\u0027s now look at how we can upload those files to the Object Store.  To do so, we will use the \"hdfs dfs\" command line tool.\n\nBefore running the paragraph below, please put the name of the Object Store container where you want to store the files.  This container should already exist.  If you need to create a new container, try using the Storage Cloud web UI launchable from the Oracle Cloud My Services web page.\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 1:31:11 PM",
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": "true"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {
+          "identity-domain": "gse00010212"
+        },
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363660_1962613656",
+      "id": "20170310-124752_2058114707",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Aug 23, 2017 4:36:52 PM",
+      "dateFinished": "Aug 23, 2017 4:36:52 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\necho \"listing contents of linux file system\"\nls -l speeches/\necho \"..\"\n\nBASE\u003d$(grep bdcsce_default_objectstore_url /etc/bdcsce/conf/datasources.properties |cut -d\u003d -f2 |sed \u0027s%/*$%%\u0027)\n# if url is swift:// and you need to create a new container, uncomment the following line\n   # swift post $BASE 2\u003e\u00261\nhdfs dfs -ls $BASE/speeches\n\necho \"uploading to Object Store\"\n\nhdfs dfs -mkdir $BASE/speeches\n\nhdfs dfs -copyFromLocal speeches/pres*.txt $BASE/speeches\necho \"..\"\n\n\necho \"listing contents of container\"\nhdfs dfs -ls $BASE/speeches\n\necho \"done\"",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 1:31:18 PM",
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": "false"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "results": {},
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {
+          "container": "dcb-bdcs-apr12"
+        },
+        "forms": {
+          "container": {
+            "name": "container",
+            "defaultValue": "",
+            "hidden": false
+          }
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363660_1962613656",
+      "id": "20170310-124813_560716809",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:32:51 AM",
+      "dateFinished": "Nov 7, 2017 2:33:07 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md \n# How to List Files in a specific Container\n\nEnter the name of one of your containers shown above in the parameter field below.",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": "true"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363661_1962228907",
+      "id": "20170310-124642_248820191",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Aug 23, 2017 4:36:58 PM",
+      "dateFinished": "Aug 23, 2017 4:36:58 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n\nBASE\u003d$(grep bdcsce_default_objectstore_url /etc/bdcsce/conf/datasources.properties |cut -d\u003d -f2 |sed \u0027s%/*$%%\u0027)\n\nhdfs dfs -ls $BASE/speeches\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/text",
+        "results": {},
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {
+          "container": "dcb-bdcs-apr12"
+        },
+        "forms": {
+          "container": {
+            "name": "container",
+            "defaultValue": "",
+            "hidden": false
+          }
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363661_1962228907",
+      "id": "20170310-124657_334106322",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:16:22 AM",
+      "dateFinished": "Nov 7, 2017 2:16:26 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# How to download from the Object Store to the local linux file system\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": "true"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363662_1963383154",
+      "id": "20170310-124931_1822013181",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Aug 16, 2017 8:54:27 PM",
+      "dateFinished": "Aug 16, 2017 8:54:27 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n\n# make a temp directory\nmkdir /tmp/speeches\ncd /tmp/speeches\n\n# clear out temp directory\nrm pres*.txt\n\n\necho \"Listing local linux files before download\"\nls -l \necho \"..\"\n\necho \"Downloading a single file from object store\"\n\nBASE\u003d$(grep bdcsce_default_objectstore_url /etc/bdcsce/conf/datasources.properties |cut -d\u003d -f2 |sed \u0027s%/*$%%\u0027)\n\nhdfs dfs -copyToLocal $BASE/speeches/pres1789_wash1.txt .\n\necho \"..\"\n\necho \"Listing local linux files after download\"\nls -l \n\necho \"done\"\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/text",
+        "results": {},
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {
+          "container": "dcb-bdcs-apr12"
+        },
+        "forms": {
+          "container": {
+            "name": "container",
+            "defaultValue": "",
+            "hidden": false
+          }
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363662_1963383154",
+      "id": "20170310-124959_2033132768",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:22:41 AM",
+      "dateFinished": "Nov 7, 2017 2:22:44 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# How to upload/download from the local file system to hdfs\n\nSo far in this note, we\u0027ve worked with files stored in the Object Store as well as files stored on the Zeppelin server\u0027s linux file system.  We will now demonstrate how to work your BDCS-CE\u0027s HDFS file system.  ",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": "true"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363662_1963383154",
+      "id": "20170310-125022_992238564",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Aug 16, 2017 8:55:27 PM",
+      "dateFinished": "Aug 16, 2017 8:55:27 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n\ncd speeches\necho \"Local file listing\"\nls -l\necho \"..\"\n\necho \"HDFS file listing for zeppelin user\u0027s default directory\"\nhadoop fs -ls 2\u003e\u00261\necho \"..\"\n\necho \"Create a HDFS subdirectory speeches_hdfs (if not already there)\"\nhadoop fs -mkdir speeches_hdfs 2\u003e\u00261\necho \"..\"\n\necho \"copy file from local linux file system into HDFS\"\nhadoop fs -put pres1861_lincoln1.txt speeches_hdfs/pres1861_lincoln.txt 2\u003e\u00261\necho \"..\"\n\necho \"HDFS file listing of subdirectoryfor after copy\"\nhadoop fs -ls speeches_hdfs/ 2\u003e\u00261\necho \"..\"\n\necho \"copy file from HDFS to a local linux file\"\nhadoop fs -get speeches_hdfs/pres1861_lincoln.txt lincoln1_local.txt  2\u003e\u00261\necho \"..\"\n\necho \"Local linux file listing\"\nls -l\necho \"..\"\n\n#remove the file we just copied to avoid confusion\nrm lincoln1_local.txt\n\necho \"done\"\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/text",
+        "results": {},
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363662_1963383154",
+      "id": "20170310-125106_1853119614",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:19:35 AM",
+      "dateFinished": "Nov 7, 2017 2:19:47 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Before you continue...\n\nBefore you continue, be sure to run the paragraph above and check the output.  You should see the pres1861_lincoln.txt file successfully copied to HDFS.  The next tutorial will be expecting it to be there.",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363662_1963383154",
+      "id": "20170403-111201_1505916192",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Aug 16, 2017 8:55:54 PM",
+      "dateFinished": "Aug 16, 2017 8:55:55 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Using Hadoop Tools (hadoop fs or distcp) with Object Store\n\nThe next paragraph shows some examples of using hadoop tools like the \"hadoop fs\" command with the Object Store.\n\n\n\nWe will use the \"default\" set of Object Store credentials.  These \"default\" credentials were defined when you created this BDCS-CE instance.\n\nThe syntax of the swift filesystem is:\n\n*swift://Container.default/filename*\n\nwhere **Container** is the name of your Object Store container and **default** is the name of your credentials property set.  For this tutorial, we will always use \"default\" for the credentials set name (see the commented lines in the paragraph below if you want an example of using a different set of credentials).\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": "true"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363663_1962998405",
+      "id": "20170310-125238_348876259",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:20:11 AM",
+      "dateFinished": "Nov 7, 2017 2:20:12 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Commands to use Hadoop tools to access Object Store",
+      "text": "%sh\n\n# example of copying from Object Store to HDFS (without writing to local file system first)\nBASE\u003d$(grep bdcsce_default_objectstore_url /etc/bdcsce/conf/datasources.properties |cut -d\u003d -f2 |sed \u0027s%/*$%%\u0027)\n\necho \"use hadoop fs to list files on Object Store container\"\nhadoop fs -ls $BASE/speeches 2\u003e\u00261\necho \"..\"\n\necho \"use hadoop fs to copy file (pres1789_wash1.txt) from Object Store to HDFS (objstorecopy.txt)\"\nhadoop fs -cp $BASE/speeches/pres1789_wash1.txt objstorecopy.txt 2\u003e\u00261\necho \"..\"\n\n\necho \"see if the file (objstorecopy.txt) got copied into hdfs\"\nhadoop fs -ls 2\u003e\u00261 \necho \"..\"\n\necho \"clean up the file from hdfs\"\nhadoop fs -rm objstorecopy.txt 2\u003e\u00261\necho \"..\"\n\n# For BDCS 17.2.1, the hdfs /user/zeppelin directory is not readable by others, which means it can\u0027t be seen with the Data Stores tab.  We\u0027ll quickly fix it here:\nhadoop fs -chmod 755 /user/zeppelin\n\necho \"done\"",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/text",
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false,
+          "language": "text"
+        },
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {
+          "container": "dcb-bdcs-apr12"
+        },
+        "forms": {
+          "container": {
+            "name": "container",
+            "defaultValue": "",
+            "hidden": false
+          }
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363663_1962998405",
+      "id": "20170316-123141_156532587",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:35:40 AM",
+      "dateFinished": "Nov 7, 2017 2:35:54 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Use the BDCS-CE Console Data Stores Viewer\n\nAs a final exercise in this tutorial, we will show you how to view the HDFS and Object Store via the BDCS-CE Console\u0027s Data Stores tab.\n\nSimply click on the Data Stores tab (you will leave this Note, but you can click on the Notebook tab to navigate back) and explore both the HDFS and Object Store sections.\n\n + For HDFS, you should be able to navigate to the /user/zeppelin/speeches_hdfs directory and see a screen like this:\n![HDFS](https://gse00010212.storage.oraclecloud.com/v1/Storage-gse00010212/images/snap0011506.jpg \"HDFS\")\n\n + For Object Store, you should be able to see the individual speeches files (assumes that you uploaded the speeches to the \"default\" container, which is the container you named when you created your BDCS-CE instance):\n![ObjectStore](https://gse00010212.storage.oraclecloud.com/v1/Storage-gse00010212/images/snap0011504.jpg \"Object Store\")\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "enabled": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "editorSetting": {
+          "editOnDblClick": "true",
+          "language": "markdown"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363663_1962998405",
+      "id": "20170413-131335_1926680784",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Nov 7, 2017 2:36:48 AM",
+      "dateFinished": "Nov 7, 2017 2:36:48 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Next steps\n\n+ (Not available yet. Coming soon ...) Proceed to the next tutorial to see how to write Spark (Scala and Python) notes that access data stored in HDFS, Object Store, and the Zeppelin server\u0027s linux filesystem.",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": "true"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": [
+          {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            }
+          }
+        ],
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1495426363663_1962998405",
+      "id": "20170310-125312_1484651851",
+      "dateCreated": "May 22, 2017 12:12:43 AM",
+      "dateStarted": "Aug 23, 2017 4:37:13 PM",
+      "dateFinished": "Aug 23, 2017 4:37:13 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 7, 2017 2:38:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/text",
+        "editorHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1501890603406_-522572673",
+      "id": "20170804-235003_1095544027",
+      "dateCreated": "Aug 4, 2017 11:50:03 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": " Tutorial 2 Working with the Object Store and HDFS",
+  "id": "2CHWTTSYP",
+  "angularObjects": {
+    "2CZGGR8PQ:shared_process": [],
+    "2CXFY3DJG:shared_process": [],
+    "2CWPTNGPP:shared_process": [],
+    "2CXEUVZ1S:shared_process": [],
+    "2CWUA91D3:shared_process": [],
+    "2CWYKUF9Z:shared_process": [],
+    "2CZSY48TE:shared_process": [],
+    "2CYNSTNRV:shared_process": []
+  },
+  "config": {
+    "looknfeel": "default"
+  },
+  "info": {}
+}

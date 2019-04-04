@@ -1,0 +1,407 @@
+{
+  "paragraphs": [
+    {
+      "text": "%sh\nif [ -e /tmp/aon.dataset.downloaded ]\nthen\n  echo \u0027Files already downloaded so skipping the download ...\u0027\n  exit 0;\nfi\n\ncd /tmp\nif [ -e /tmp/GEM-GHEC-v1.txt ]\nthen\n    rm -f /tmp/GEM-GHEC-v1.txt\nfi\nif [ -e /tmp/ISC-GEM-latest.zip ]\nthen\n    rm -f /tmp/ISC-GEM-latest.zip\nfi\nif [ -e /tmp/isc-gem-cat.csv ]\nthen\n    rm -f /tmp/isc-gem-cat.csv\nfi \n\nif hdfs dfs -stat /tmp/isc-gem-cat.csv\nthen\n   hdfs dfs -rm  /tmp/isc-gem-cat.csv\nfi\nif hdfs dfs -stat /tmp/GEM-GHEC-v1.txt\nthen\n   hdfs dfs -rm  /tmp/GEM-GHEC-v1.txt\nfi\n\ncurl -O -L http://www.emidius.eu/GEH/download/GEM-GHEC-v1.txt\ncurl -O -L http://colossus.iris.washington.edu/iscgem/download/ISC-GEM-latest.zip\n\nunzip ISC-GEM-latest.zip\nhdfs dfs -put GEM-GHEC-v1.txt /tmp\nhdfs dfs -put isc-gem-cat.csv /tmp\nhdfs dfs -ls -h /tmp/isc-gem-cat.csv\nif [ $? -eq 0 ];\nthen\n  touch /tmp/aon.dataset.downloaded\nfi",
+      "authenticationInfo": {},
+      "dateUpdated": "Feb 24, 2017 7:55:01 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/sh",
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1430839036445_1344921600",
+      "id": "20150506-001716_1056821854",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "Files already downloaded so skipping the download ...\n"
+      },
+      "dateCreated": "May 6, 2015 12:17:16 AM",
+      "dateStarted": "Feb 24, 2017 7:55:01 AM",
+      "dateFinished": "Feb 24, 2017 7:55:01 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Wait for data to be downloaded\nimport java.nio.file.{Paths, Files};\nvar counter \u003d 0;\ntry {\n  while (counter \u003c 50 \u0026\u0026 !Files.exists(Paths.get(\"/tmp/aon.dataset.downloaded\"))) {\n    println(\"sleeping for 100ms...\")\n    Thread.sleep(100);\n    counter \u003d counter + 1;\n  }\n}catch {\n    case ea: InterruptedException \u003d\u003e print (\"Thread interrupted\");\n}\n// Data downloaded\nval historicalData \u003d sc.textFile(\"/tmp/GEM-GHEC-v1.txt\")\nval globalInstrumentalCatalogData \u003d sc.textFile(\"/tmp/isc-gem-cat.csv\")\ncase class EarthQuake(\nid: String,\ndate: String,\nlat: Double,\nlon: Double,\ndepth: Double,\nmag: Double,\nmunc: Double\n)\n\nval historical \u003d historicalData.filter(s \u003d\u003e\n!s.startsWith(\"#\") \u0026\u0026 !s.startsWith(\"En\\tSource\")\n).map{s\u003d\u003e\n\ndef get(s:String) \u003d {\nif (s\u003d\u003d\"\") {\n\"00\"\n} else {\ns\n}\n}\nval r \u003d s.split(\"\\t\")\nval year \u003d r(2) // year\nif (r(2) !\u003d \"\") {\nval month \u003d r(2)\n} else {\nval month \u003d \"00\"\n}\n\nval date \u003d r(2) + \"-\" + get(r(3)) + \"-\" + get(r(4)) + \" \" + get(r(5)) + \":\" + get(r(6)) + \":\" + get(r(7)) + \".00\"\n\nEarthQuake(\nr(0).toString, // id\ndate,\nget(r(9)).toDouble,\nget(r(10)).toDouble,\nget(r(14)).toDouble, // depth\nget(r(17)).toDouble, // mag\nget(r(18)).toDouble // mag unc\n\n)\n}\n\nval earthQuake \u003d globalInstrumentalCatalogData.filter(!_.startsWith(\"#\")).map{s\u003d\u003e\nval r \u003d s.split(\",\")\nEarthQuake(\nr(23).trim,\nr(0).trim,\nr(1).toDouble,\nr(2).toDouble,\nr(7).toDouble,\nr(10).toDouble,\nr(11).toDouble\n)\n}.union(historical).toDF\n\nearthQuake.registerTempTable(\"quake\")\n",
+      "authenticationInfo": {},
+      "dateUpdated": "Feb 24, 2017 7:48:32 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1437978577716_-135483952",
+      "id": "20150727-062937_662448974",
+      "dateCreated": "Jul 27, 2015 6:29:37 AM",
+      "dateStarted": "Feb 24, 2017 7:48:32 AM",
+      "dateFinished": "Feb 24, 2017 7:48:34 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql select substring(date, 0, 4) as dt, avg(mag) as avg, max(mag) as max, min(mag) as min from quake group by substring(date, 0, 4) order by dt",
+      "authenticationInfo": {},
+      "dateUpdated": "Feb 24, 2017 7:48:32 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "stackedAreaChart",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "dt",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "avg",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "dt",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "avg",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "editorMode": "ace/mode/sql",
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1430909535832_-1541268265",
+      "id": "20150506-195215_1965567578",
+      "dateCreated": "May 6, 2015 7:52:15 PM",
+      "dateStarted": "Feb 24, 2017 7:48:33 AM",
+      "dateFinished": "Feb 24, 2017 7:48:36 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql select substring(date, 0, 4) as dt, count(*) as cnt from quake group by substring(date, 0, 4) order by dt\n",
+      "authenticationInfo": {},
+      "dateUpdated": "Feb 24, 2017 7:48:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "stackedAreaChart",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "dt",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "cnt",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "dt",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "cnt",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "editorMode": "ace/mode/sql",
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1430926486272_-1214534747",
+      "id": "20150507-003446_1538551325",
+      "dateCreated": "May 7, 2015 12:34:46 AM",
+      "dateStarted": "Feb 24, 2017 7:48:34 AM",
+      "dateFinished": "Feb 24, 2017 7:48:37 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Depth",
+      "text": "%sql select substring(date, 0, 4) as dt, avg(depth) as depth from quake group by substring(date, 0, 4) order by dt",
+      "authenticationInfo": {},
+      "dateUpdated": "Feb 24, 2017 7:48:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "multiBarChart",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "dt",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "depth",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "dt",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "depth",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "title": true,
+        "editorMode": "ace/mode/sql",
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1430926532662_-457071432",
+      "id": "20150507-003532_1237133223",
+      "dateCreated": "May 7, 2015 12:35:32 AM",
+      "dateStarted": "Feb 24, 2017 7:48:36 AM",
+      "dateFinished": "Feb 24, 2017 7:48:39 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "println(\"%table mag\\tcount\")\nearthQuake.rdd.map(s\u003d\u003e(s(5).toString.toDouble.toInt, 1)).reduceByKey(_ + _).collect.foreach(s\u003d\u003eprintln(s._1 + \"\\t\" + s._2))",
+      "authenticationInfo": {},
+      "dateUpdated": "Feb 24, 2017 7:48:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "pieChart",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "mag",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "count",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "mag",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "count",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "editorMode": "ace/mode/scala",
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1430926579052_-2085667554",
+      "id": "20150507-003619_868555740",
+      "dateCreated": "May 7, 2015 12:36:19 AM",
+      "dateStarted": "Feb 24, 2017 7:48:37 AM",
+      "dateFinished": "Feb 24, 2017 7:48:40 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val gson \u003d new com.google.gson.Gson()\nval bubbles \u003d sqlContext.sql(s\"\"\"select *, case when mag \u003c 6 then 1.7 else ((mag - 6) * 3)+1.7 end as mag_adjusted,  case when depth \u003c\u003d 100 then cast(depth/10 as int) when depth \u003c\u003d 1000 then cast(depth/100 as int) *10  else 100 end  as depth_cat from quake where date \u003e\u003d \"1990\" \"\"\").rdd.map{r\u003d\u003e\nMap(\n\"name\" -\u003e r(0).toString,\n\"radius\" -\u003e r(7).toString.toDouble,\n\"mag\" -\u003e r(5).toString.toDouble,\n\"date\" -\u003e r(1).toString,\n\"latitude\" -\u003e r(2).toString.toDouble,\n\"longitude\" -\u003e r(3).toString.toDouble,\n\"fillKey\" -\u003e r(8).toString,\n\"depth\" -\u003e r(4).toString\n)\n}.collect.map(s\u003d\u003escala.collection.JavaConversions.mapAsJavaMap(s))\nval bubblesJson \u003d gson.toJson(bubbles)",
+      "authenticationInfo": {},
+      "dateUpdated": "Feb 24, 2017 7:48:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1430926623444_-2038450708",
+      "id": "20150507-003703_1041146387",
+      "dateCreated": "May 7, 2015 12:37:03 AM",
+      "dateStarted": "Feb 24, 2017 7:48:39 AM",
+      "dateFinished": "Feb 24, 2017 7:48:41 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "println(s\"\"\"%html\n\u003c!-- script src\u003d\"//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js\"\u003e\u003c/script --\u003e\n\u003cscript src\u003d\"http://datamaps.github.io/scripts/topojson.js\"\u003e\u003c/script\u003e\n\u003cscript src\u003d\"http://datamaps.github.io/scripts/0.4.0/datamaps.all.js\"\u003e\u003c/script\u003e\n\u003cdiv id\u003d\"worldMap\" style\u003d\"position: relative; width: 1200px; height: 1000px;\"\u003e\u003c/div\u003e\n\u003cscript\u003e\nsetTimeout(function(){\nvar map \u003d new Datamap({\nelement: document.getElementById(\u0027worldMap\u0027),\ngeographyConfig: {\npopupOnHover: false,\nhighlightOnHover: false\n},\nfills: {\ndefaultFill: \u0027#ABDDA4\u0027,\n\u00270\u0027: \u0027#393b79\u0027,\n\u00271\u0027: \u0027#5254a3\u0027,\n\u00272\u0027: \u0027#6b6ecf\u0027,\n\u00273\u0027: \u0027#9c9ede\u0027,\n\u00274\u0027: \u0027#637939\u0027,\n\u00275\u0027: \u0027#8ca252\u0027,\n\u00276\u0027: \u0027#b5cf6b\u0027,\n\u00277\u0027: \u0027#cedb9c\u0027,\n\u00278\u0027: \u0027#8c6d31\u0027,\n\u00279\u0027: \u0027#bd9e39\u0027,\n\u002710\u0027: \u0027#e7ba52\u0027,\n\u002720\u0027: \u0027#e7cb94\u0027,\n\u002730\u0027: \u0027#843c39\u0027,\n\u002740\u0027: \u0027#ad494a\u0027,\n\u002750\u0027: \u0027#d6616b\u0027,\n\u002760\u0027: \u0027#e7969c\u0027,\n\u002770\u0027: \u0027#7b4173\u0027,\n\u002780\u0027: \u0027#a55194\u0027,\n\u002790\u0027: \u0027#ce6dbd\u0027,\n\u0027100\u0027: \u0027#de9ed6\u0027\n},\nbubblesConfig: {\nborderWidth: 0,\nfillOpacity: 0.75\n}\n});\n\nmap.bubbles(${bubblesJson}, {\npopupTemplate: function(geo, data) {\nreturn \u0027\u003cdiv class\u003d\"hoverinfo\"\u003eMagnitude: \u0027 + data.mag + \u0027\u003cbr/\u003e  Exploded on: \u0027 + data.date + \u0027 \u003cbr/\u003e Depth: \u0027 + data.depth + \u0027\u003cbr/\u003e Depth Category: \u0027 + data.fillKey +  \u0027\u003c/div\u003e\u0027\n}\n});\n\n}, 2000)\n\u003c/script\u003e\n\"\"\")",
+      "authenticationInfo": {},
+      "dateUpdated": "Feb 24, 2017 7:48:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1430926670129_1617064439",
+      "id": "20150507-003750_2126368247",
+      "dateCreated": "May 7, 2015 12:37:50 AM",
+      "dateStarted": "Feb 24, 2017 7:48:54 AM",
+      "dateFinished": "Feb 24, 2017 7:48:54 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "authenticationInfo": {},
+      "dateUpdated": "Feb 24, 2017 7:48:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1430926693981_-742954666",
+      "id": "20150507-003813_123197788",
+      "dateCreated": "May 7, 2015 12:38:13 AM",
+      "dateStarted": "Feb 24, 2017 7:48:41 AM",
+      "dateFinished": "Feb 24, 2017 7:48:41 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "AON Demo",
+  "id": "2APFTN3NY",
+  "angularObjects": {
+    "2C919KR6F": [],
+    "2C97ZBP5U": [],
+    "2CA4Q4KPJ": [],
+    "2C962G1XX": [],
+    "2C8QSQZ4R": [],
+    "2CBZ4GHQX": [],
+    "2CBKZTYKJ": [],
+    "2C9QJ33Y6": [],
+    "2CAACCR11": []
+  },
+  "config": {
+    "looknfeel": "default"
+  },
+  "info": {}
+}
